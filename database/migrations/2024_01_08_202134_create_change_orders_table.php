@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('effect');
             $table->text('reason');
             $table->dateTime('change_date');
-            $table->string('downtime');
+            $table->text('downtime');
             $table->text('back_out_plan');
             $table->string('communication');
             $table->text('comments');

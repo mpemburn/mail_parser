@@ -1,5 +1,6 @@
 <?php
 
+use App\Parsers\ChangeOrderParser;
 use App\Services\EmailParserService;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,10 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::get('/dev', function () {
-    (new EmailParserService())->parseFile('JSON/test3.json');
+    (new EmailParserService())
+        ->setParser(new ChangeOrderParser())
+        ->parseFile('JSON/2024-01-08.json');
+//        ->parseFile('JSON/Press3/Press3_1.json');
 });
 
 Route::get('/', function () {
