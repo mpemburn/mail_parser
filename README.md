@@ -1,4 +1,0 @@
-https://graph.microsoft.com/v1.0/me/mailfolders/inbox/childFolders
-
-Pagely Folder ID:
-AAMkADVmZmVlZWVkLTZmOTYtNGMxMS05NDJkLTlhY2Y0ODBiMWI3ZAAuAAAAAADbdaJf8-7dS7ADbl07hoBqAQCXaQg4s3B6SY1MrsnnuqasAAAD0MZ7AAA=
