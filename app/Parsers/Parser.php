@@ -10,14 +10,19 @@ use stdClass;
 abstract class Parser implements ParserInterface
 {
     protected Collection $collectedData;
+    protected string $project;
 
     abstract public function parse(stdClass $email);
-    abstract protected function convertData(Collection $results, Collection &$data): void;
     abstract public function writeData(): void;
 
     public function __construct()
     {
         $this->collectedData = collect();
+    }
+
+    public function setProject(string $project)
+    {
+        $this->project = $project;
     }
 
     protected function parseDom(string $html, Collection &$data): void

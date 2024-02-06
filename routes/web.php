@@ -1,6 +1,7 @@
 <?php
 
 use App\Parsers\ChangeOrderParser;
+use App\Parsers\PagelyParser;
 use App\Services\EmailParserService;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -18,9 +19,10 @@ use Illuminate\Support\Facades\Storage;
 
 Route::get('/dev', function () {
     (new EmailParserService())
-        ->setParser(new ChangeOrderParser())
-        ->parseFile('JSON/2024-01-08.json');
-//        ->parseFile('JSON/Press3/Press3_1.json');
+        ->setParser(new PagelyParser())
+        ->setProject('Press3')
+        ->setDirectory('JSON/Press3')
+        ->parseDirectory();
 });
 
 Route::get('/', function () {

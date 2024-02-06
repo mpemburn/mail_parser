@@ -3,9 +3,6 @@
 namespace App\Services;
 
 use App\Interfaces\ParserInterface;
-use App\Models\ChangeOrder;
-use DOMDocument;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use stdClass;
@@ -13,6 +10,8 @@ use stdClass;
 class EmailParserService
 {
     protected ParserInterface $parser;
+    protected string $project;
+    protected string $directory;
 
     protected Collection $changeOrderData;
 
@@ -28,10 +27,35 @@ class EmailParserService
         return $this;
     }
 
+    public function setProject(string $project): self
+    {
+        $this->project = $project;
+
+        if ($this->parser) {
+            $this->parser->setProject($project);
+        }
+
+        return $this;
+    }
+
+    public function setDirectory(string $directory): self
+    {
+        $this->directory = $directory;
+
+        return $this;
+    }
+
+    public function parseDirectory()
+    {
+        $files = Storage::disk('local')->files($this->directory);
+        collect($files)->each(function ($file) {
+            $this->parseFile($file);
+        });
+    }
+
     public function parseFile(string $filename): void
     {
         $file = Storage::path($filename);
-//        echo $file;
 
         if (file_exists($file)) {
             $contents = file_get_contents($file);
@@ -44,16 +68,8 @@ class EmailParserService
     {
         collect($json->value)->each(function ($email) {
             $this->parser->parse($email);
-//            echo '<br>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~';
-//            echo $email->subject;
-//            echo '<br>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~';
-//            $body = $email->body->content;
-//            echo $body;
         });
-//        !d($this->changeOrderData);
+
         $this->parser->writeData();
     }
-
-
-
 }
